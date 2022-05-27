@@ -8,5 +8,10 @@
     "ID": "987da614-b73c-4de9-af8d-e72dfb282946",
     "name": "Salads",
     "createdAt": 1653663566096
+  },
+  {
+    "ID": "0c226994-1ddd-4fc8-ba7b-af864083bbd0",
+    "name": "Pizza",
+    "createdAt": 1653663573689
   }
 ]
