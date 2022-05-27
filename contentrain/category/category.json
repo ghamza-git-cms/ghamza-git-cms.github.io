@@ -3,5 +3,10 @@
     "ID": "0df2956e-c268-4679-8487-6278c248d949",
     "name": "Burgers",
     "createdAt": 1653663560576
+  },
+  {
+    "ID": "987da614-b73c-4de9-af8d-e72dfb282946",
+    "name": "Salads",
+    "createdAt": 1653663566096
   }
 ]
