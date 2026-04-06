@@ -1,10 +1,11 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { useLanguage } from '../context/LanguageContext';
-import { fadeUp, fadeIn, scaleIn, staggerContainer } from '../lib/animations';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import { fadeUp, fadeIn, scaleIn, staggerContainer } from "../lib/animations";
+import heroImage from "../assets/hero.jpg";
 
 export default function Hero() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F0] via-[#FDEBD0] to-[#FFF0DC] py-16 md:py-32">
@@ -70,20 +71,17 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             whileHover={{ scale: 1.04, rotate: 2 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
           >
             {/* Circular background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#F5A623] to-[#E8470A] rounded-full opacity-15" />
-            {/* Noodle bowl illustration */}
+            {/* Product image */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-[110px] sm:text-[140px] md:text-[180px] leading-none select-none drop-shadow-2xl">
-                  🍜
-                </div>
-                <p className="text-[#2C1810] font-bold text-xl mt-2">
-                  {language === 'ar' ? 'حمودة' : 'Hamouda'}
-                </p>
-              </div>
+              <img
+                src={heroImage}
+                alt="Hamouda self-heating noodles"
+                className="w-full h-full object-contain drop-shadow-2xl rounded-full"
+              />
             </div>
           </motion.div>
         </motion.div>

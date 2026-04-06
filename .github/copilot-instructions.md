@@ -19,7 +19,7 @@ Vite 8 + React 19 + TypeScript 5.9 single-page app. No routing or state manageme
 - **Layout:** `App.tsx` wraps everything in `<LanguageProvider>` and renders `Navbar`, `Hero`, `Features`, `HowItWorks`, `CallToAction`, `Footer` in order. All components live flat in `src/components/`.
 - **Styling:** Tailwind CSS v4 via `@tailwindcss/vite`. Colors are applied as Tailwind arbitrary values (e.g. `bg-[#E8470A]`) matching the CSS custom properties defined in `src/index.css`. No separate CSS files per component.
 - **i18n:** Bilingual English/Arabic via `src/context/LanguageContext.tsx`. The `useLanguage()` hook exposes `{ t, language, toggleLanguage }`. All user-facing strings live in `src/translations/en.ts` and `src/translations/ar.ts` — the `en.ts` shape is the source of truth for the `Translations` type. Switching to Arabic sets `dir="rtl"` on `<html>` and switches the font family.
-- **Assets:** Import images as ES modules (`import hero from './assets/hero.png'`).
+- **Assets:** Import images as ES modules (`import hero from './assets/hero.jpg'`).
 
 ## Key Conventions
 
