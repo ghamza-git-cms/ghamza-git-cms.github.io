@@ -72,7 +72,7 @@ const ar = {
     headline: 'هل أنت مستعد لتناول وجبات أفضل في أي مكان؟',
     subtext: 'اطلب حمودة اليوم ولا تتنازل عن الأكل الساخن أبداً.',
     button: 'تسوق الآن',
-    note: 'شحن مجاني للطلبات فوق 90 ريال',
+    note: 'شحن مجاني للطلبات فوق 25$',
   },
   footer: {
     brand: 'حمودة',
@@ -110,13 +110,14 @@ const ar = {
     cartBadgeLabel: 'عناصر في السلة',
     products: [
       {
-        id: 'noodles',
-        name: 'نودلز حمودة',
+        id: 'self-heating-hot-pot-noodles',
+        name: 'نودلز هوت بوت ذاتية التسخين',
         emoji: '🍜',
         description: 'نودلز فورية ذاتية التسخين — جاهزة في دقائق بقطرة ماء فقط. اختر نكهتك المفضلة.',
         flavors: [
-          { id: 'vegetables', name: 'خضار', price: 550000 },
-          { id: 'spicy', name: 'حار 🌶️', price: 550000 },
+          { id: 'sour-and-spicy-golden-soup', name: 'شوربة ذهبية حامضة وحارة', price: 550000 },
+          { id: 'spicy-clear-oil', name: 'زيت شفاف حار', price: 550000 },
+          { id: 'tomato', name: 'طماطم', price: 550000 },
         ],
       },
     ],

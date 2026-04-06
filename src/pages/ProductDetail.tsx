@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
 import { fadeUp, viewport } from '../lib/animations';
+import { productImages, productVideos } from '../data/products';
 
 export default function ProductDetail() {
   const { productId } = useParams<{ productId: string }>();
@@ -14,6 +15,7 @@ export default function ProductDetail() {
   const product = t.shop.products.find((p) => p.id === productId);
 
   const [selectedFlavorId, setSelectedFlavorId] = useState(product?.flavors[0]?.id ?? '');
+  const [imageIndex, setImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
   if (!product) {
@@ -28,6 +30,22 @@ export default function ProductDetail() {
   }
 
   const selectedFlavor = product.flavors.find((f) => f.id === selectedFlavorId) ?? product.flavors[0];
+  const images = productImages[product.id]?.[selectedFlavor.id] ?? [];
+  const productVideo = productVideos[product.id];
+
+  type MediaItem = { type: 'image'; src: string } | { type: 'video'; src: string };
+  const media: MediaItem[] = [
+    ...images.map((src) => ({ type: 'image' as const, src })),
+    ...(productVideo ? [{ type: 'video' as const, src: productVideo }] : []),
+  ];
+
+  const handleFlavorChange = (flavorId: string) => {
+    setSelectedFlavorId(flavorId);
+    setImageIndex(0);
+  };
+
+  const prevImage = () => setImageIndex((i) => (i - 1 + media.length) % media.length);
+  const nextImage = () => setImageIndex((i) => (i + 1) % media.length);
 
   const formatPrice = (amount: number) =>
     `${amount.toLocaleString(language === 'ar' ? 'ar-LB' : 'en-LB')} ${t.shop.currency}`;
@@ -63,8 +81,66 @@ export default function ProductDetail() {
           animate="visible"
           viewport={viewport}
         >
-          {/* Emoji */}
-          <div className="text-8xl md:text-9xl text-center mb-8 select-none">{product.emoji}</div>
+          {/* Image / video carousel */}
+          {media.length > 0 ? (
+            <div className="relative mb-8 select-none">
+              <div className="overflow-hidden rounded-xl aspect-square bg-[#FDEBD0]">
+                {media[imageIndex].type === 'video' ? (
+                  <video
+                    key={`${product.id}-video`}
+                    src={media[imageIndex].src}
+                    controls
+                    muted
+                    playsInline
+                    preload="none"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    key={`${selectedFlavor.id}-${imageIndex}`}
+                    src={media[imageIndex].src}
+                    alt={`${product.name} — ${selectedFlavor.name}`}
+                    className="w-full h-full object-cover transition-opacity duration-300"
+                  />
+                )}
+              </div>
+
+              {media.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    aria-label="Previous image"
+                    className="absolute start-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow flex items-center justify-center text-[#2C1810] hover:bg-[#E8470A] hover:text-white transition-all"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    aria-label="Next image"
+                    className="absolute end-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow flex items-center justify-center text-[#2C1810] hover:bg-[#E8470A] hover:text-white transition-all"
+                  >
+                    ›
+                  </button>
+
+                  {/* Dot indicators */}
+                  <div className="flex justify-center gap-1.5 mt-3">
+                    {media.map((item, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setImageIndex(idx)}
+                        aria-label={item.type === 'video' ? 'Tutorial video' : `Image ${idx + 1}`}
+                        className={`transition-all ${
+                          idx === imageIndex ? 'bg-[#E8470A] scale-125' : 'bg-[#FDEBD0]'
+                        } ${item.type === 'video' ? 'w-3 h-2 rounded-sm' : 'w-2 h-2 rounded-full'}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="text-8xl md:text-9xl text-center mb-8 select-none">{product.emoji}</div>
+          )}
 
           {/* Name + description */}
           <h1 className="text-2xl md:text-3xl font-extrabold text-[#2C1810] mb-3 text-center">
@@ -79,7 +155,7 @@ export default function ProductDetail() {
               {product.flavors.map((flavor) => (
                 <button
                   key={flavor.id}
-                  onClick={() => setSelectedFlavorId(flavor.id)}
+                  onClick={() => handleFlavorChange(flavor.id)}
                   className={`px-5 py-2.5 rounded-full font-semibold text-sm border-2 transition-all ${
                     selectedFlavorId === flavor.id
                       ? 'bg-[#E8470A] border-[#E8470A] text-white shadow-md'

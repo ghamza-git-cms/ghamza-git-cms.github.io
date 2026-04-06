@@ -49,14 +49,6 @@ export default function Hero() {
               {t.hero.shopNow}
             </Link>
             <a
-              href="https://wa.me/96170300022"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-2 border-[#E8470A] text-[#E8470A] px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#E8470A]/5 transition-colors text-center"
-            >
-              {t.hero.cta}
-            </a>
-            <a
               href="#how-it-works"
               className="border-2 border-[#2C1810]/20 text-[#2C1810] px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#2C1810]/5 transition-colors text-center"
             >

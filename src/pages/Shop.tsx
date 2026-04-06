@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { fadeUp, staggerContainer, viewport } from '../lib/animations';
+import { productImages } from '../data/products';
 
 export default function Shop() {
   const { t } = useLanguage();
@@ -35,32 +36,51 @@ export default function Shop() {
           initial="hidden"
           animate="visible"
         >
-          {t.shop.products.map((product) => (
-            <motion.div key={product.id} variants={fadeUp}>
-              <Link
-                to={`/shop/${product.id}`}
-                className="group bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
-              >
-                <div className="text-7xl md:text-8xl mb-5 text-center select-none">
-                  {product.emoji}
-                </div>
-                <h2 className="text-lg md:text-xl font-bold text-[#2C1810] mb-2">
-                  {product.name}
-                </h2>
-                <p className="text-sm md:text-base text-[#7A4030] leading-relaxed mb-5 flex-1">
-                  {product.description}
-                </p>
-                <div className="mt-auto">
-                  <span className="inline-block w-full text-center bg-[#E8470A] text-white px-5 py-2.5 rounded-full font-semibold text-sm group-hover:bg-[#c73a08] transition-all group-hover:scale-105">
-                    {t.shop.viewDetails}
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+          {t.shop.products.map((product) => {
+            const firstFlavor = product.flavors[0];
+            const previewImage = firstFlavor
+              ? productImages[product.id]?.[firstFlavor.id]?.[0]
+              : undefined;
+
+            return (
+              <motion.div key={product.id} variants={fadeUp}>
+                <Link
+                  to={`/shop/${product.id}`}
+                  className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
+                >
+                  {previewImage ? (
+                    <div className="aspect-square overflow-hidden bg-[#FDEBD0]">
+                      <img
+                        src={previewImage}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-square flex items-center justify-center bg-[#FDEBD0] text-7xl md:text-8xl select-none">
+                      {product.emoji}
+                    </div>
+                  )}
+
+                  <div className="p-6 md:p-8 flex flex-col flex-1">
+                    <h2 className="text-lg md:text-xl font-bold text-[#2C1810] mb-2">
+                      {product.name}
+                    </h2>
+                    <p className="text-sm md:text-base text-[#7A4030] leading-relaxed mb-5 flex-1">
+                      {product.description}
+                    </p>
+                    <div className="mt-auto">
+                      <span className="inline-block w-full text-center bg-[#E8470A] text-white px-5 py-2.5 rounded-full font-semibold text-sm group-hover:bg-[#c73a08] transition-all group-hover:scale-105">
+                        {t.shop.viewDetails}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>
   );
 }
-

@@ -110,13 +110,14 @@ const en = {
     cartBadgeLabel: 'items in cart',
     products: [
       {
-        id: 'noodles',
-        name: 'Hamouda Noodles',
+        id: 'self-heating-hot-pot-noodles',
+        name: 'Self Heating Hot Pot Noodles',
         emoji: '🍜',
         description: 'Self-heating instant noodles — ready in minutes with just a drop of water. Choose your favorite flavor.',
         flavors: [
-          { id: 'vegetables', name: 'Vegetables', price: 550000 },
-          { id: 'spicy', name: 'Spicy 🌶️', price: 550000 },
+          { id: 'sour-and-spicy-golden-soup', name: 'Sour & Spicy Golden Soup', price: 550000 },
+          { id: 'spicy-clear-oil', name: 'Spicy Clear Oil', price: 550000 },
+          { id: 'tomato', name: 'Tomato', price: 550000 },
         ],
       },
     ],
