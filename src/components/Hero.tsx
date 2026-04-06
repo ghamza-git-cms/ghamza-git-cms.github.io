@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { fadeUp, fadeIn, scaleIn, staggerContainer } from '../lib/animations';
 
@@ -41,17 +42,23 @@ export default function Hero() {
             variants={fadeUp}
             className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
+            <Link
+              to="/shop"
+              className="bg-[#E8470A] text-white px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#c73a08] transition-all hover:scale-105 shadow-lg shadow-[#E8470A]/30 text-center"
+            >
+              {t.hero.shopNow}
+            </Link>
             <a
               href="https://wa.me/96170300022"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#E8470A] text-white px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#c73a08] transition-all hover:scale-105 shadow-lg shadow-[#E8470A]/30 text-center"
+              className="border-2 border-[#E8470A] text-[#E8470A] px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#E8470A]/5 transition-colors text-center"
             >
               {t.hero.cta}
             </a>
             <a
               href="#how-it-works"
-              className="border-2 border-[#E8470A] text-[#E8470A] px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#E8470A]/5 transition-colors text-center"
+              className="border-2 border-[#2C1810]/20 text-[#2C1810] px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-[#2C1810]/5 transition-colors text-center"
             >
               {t.hero.secondary}
             </a>

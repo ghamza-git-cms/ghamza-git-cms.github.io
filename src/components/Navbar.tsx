@@ -1,9 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useCart } from '../context/CartContext';
+
+function CartIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="20" cy="21" r="1" />
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+    </svg>
+  );
+}
 
 export default function Navbar() {
   const { t, toggleLanguage } = useLanguage();
+  const { totalItems } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
@@ -15,9 +28,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-[#FFF8F0]/90 backdrop-blur-sm border-b border-[#FDEBD0] shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand */}
-        <a href="#" className="text-2xl font-bold text-[#E8470A] tracking-tight">
+        <Link to="/" className="text-2xl font-bold text-[#E8470A] tracking-tight">
           {t.nav.brand}
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
@@ -30,14 +43,24 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="https://wa.me/96170300022"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#E8470A] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#c73a08] transition-colors"
+          <Link
+            to="/shop"
+            className="text-[#2C1810] hover:text-[#E8470A] font-medium transition-colors"
           >
-            {t.nav.order}
-          </a>
+            {t.nav.shop}
+          </Link>
+          <Link
+            to="/cart"
+            className="relative text-[#2C1810] hover:text-[#E8470A] transition-colors"
+            aria-label={t.shop.cartTitle}
+          >
+            <CartIcon />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -end-2 bg-[#E8470A] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                {totalItems}
+              </span>
+            )}
+          </Link>
           <button
             onClick={toggleLanguage}
             className="text-[#7A4030] hover:text-[#E8470A] font-medium text-sm transition-colors border border-[#FDEBD0] px-3 py-1.5 rounded-full"
@@ -98,14 +121,26 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="https://wa.me/96170300022"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#E8470A] text-white px-5 py-3 rounded-full font-semibold text-center hover:bg-[#c73a08] transition-colors mt-2 min-h-[44px] flex items-center justify-center"
+              <Link
+                to="/shop"
+                onClick={() => setMenuOpen(false)}
+                className="text-[#2C1810] hover:text-[#E8470A] font-medium text-lg py-3 min-h-[44px] flex items-center"
               >
-                {t.nav.order}
-              </a>
+                {t.nav.shop}
+              </Link>
+              <Link
+                to="/cart"
+                onClick={() => setMenuOpen(false)}
+                className="text-[#2C1810] hover:text-[#E8470A] font-medium text-lg py-3 min-h-[44px] flex items-center gap-2"
+              >
+                <CartIcon />
+                {t.shop.cartTitle}
+                {totalItems > 0 && (
+                  <span className="bg-[#E8470A] text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
             </div>
           </motion.div>
         )}
